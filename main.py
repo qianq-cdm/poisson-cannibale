@@ -42,6 +42,8 @@ class MyGame(arcade.Window):
 
         self.game_timer = GameElapsedTime()
 
+        self.colliding_with = None
+
     def setup(self):
         """
         Configurer les variables de votre jeu ici. Il faut appeler la méthode une nouvelle
@@ -117,6 +119,22 @@ class MyGame(arcade.Window):
 
         self.player.update(delta_time)
         self.enemy_list.update()
+
+        self.collision_detection()
+
+    def collision_detection(self):
+        player_hit_list = arcade.check_for_collision_with_list(self.player.current_animation, self.enemy_list)
+        for enemy in player_hit_list:
+            player_size = self.player.scale
+            enemy_size = enemy.scale
+            if enemy_size > player_size:
+                if enemy == self.colliding_with:
+                    return
+                self.colliding_with = enemy
+                self.player.lives -= 1
+            else:
+                self.player.scale += enemy_size
+                enemy.remove_from_sprite_lists()
 
     def update_player_speed(self):
         """
