@@ -39,17 +39,15 @@ class Player:
 
     def update(self, delta_time):      
         self.current_animation.center_x += self.current_animation.change_x
-        self.current_animation.center_y += self.current_animation.change_y
 
         if self.current_animation.center_x <= 0:
             self.current_animation.center_x = gc.SCREEN_WIDTH
         elif self.current_animation.center_x >= gc.SCREEN_WIDTH:
             self.current_animation.center_x = 0
 
-        if self.current_animation.center_y <= 0:
-            self.current_animation.center_y = gc.SCREEN_HEIGHT
-        elif self.current_animation.center_y >= gc.SCREEN_HEIGHT:
-            self.current_animation.center_y = 0
+        if (not (self.current_animation.bottom <= 0 and self.current_animation.change_y < 0)) and \
+                (not (self.current_animation.top >= gc.GUI_HEIGHT and self.current_animation.change_y > 0)):
+            self.current_animation.center_y += self.current_animation.change_y
 
         self.current_animation.scale = self.scale
 
