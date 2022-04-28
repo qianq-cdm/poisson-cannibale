@@ -65,8 +65,14 @@ class MyGame(arcade.Window):
         self.enemy_list = arcade.SpriteList()
 
         self.life_one = FishAnimation("assets/2dfish/spritesheets/__cartoon_fish_06_yellow_idle.png", scale=0.10)
+        self.life_one.left = 100
+        self.life_one.top = gc.SCREEN_HEIGHT - 10
         self.life_two = FishAnimation("assets/2dfish/spritesheets/__cartoon_fish_06_yellow_idle.png", scale=0.10)
+        self.life_two.left = self.life_one.right + 10
+        self.life_two.top = gc.SCREEN_HEIGHT - 10
         self.life_three = FishAnimation("assets/2dfish/spritesheets/__cartoon_fish_06_yellow_idle.png", scale=0.10)
+        self.life_three.left = self.life_two.right + 10
+        self.life_three.top = gc.SCREEN_HEIGHT - 10
 
         self.game_camera = arcade.Camera(gc.SCREEN_WIDTH, gc.SCREEN_HEIGHT)
         self.gui_camera = arcade.Camera(gc.SCREEN_WIDTH, gc.SCREEN_HEIGHT)
@@ -89,16 +95,10 @@ class MyGame(arcade.Window):
 
     def draw_lives(self):
         if self.player.lives >= 1:
-            self.life_one.left = 100
-            self.life_one.top = gc.SCREEN_HEIGHT - 10
             self.life_one.draw()
         if self.player.lives >= 2:
-            self.life_two.left = self.life_one.right + 10
-            self.life_two.top = gc.SCREEN_HEIGHT - 10
             self.life_two.draw()
         if self.player.lives == 3:
-            self.life_three.left = self.life_two.right + 10
-            self.life_three.top = gc.SCREEN_HEIGHT - 10
             self.life_three.draw()
 
     def on_draw(self):
