@@ -12,6 +12,7 @@ from player import Player, Direction
 from enemy_fish import EnemyFish
 from fish_animation import FishAnimation
 import game_constants as gc
+from game_state import GameState as gs
 
 
 class MyGame(arcade.Window):
@@ -28,6 +29,8 @@ class MyGame(arcade.Window):
         arcade.set_background_color(arcade.color.BLUE_YONDER)
 
         self.back_ground = None
+
+        self.game_state = None
 
         # Player related attributes.
         self.player = None
@@ -54,6 +57,8 @@ class MyGame(arcade.Window):
         Configurer les variables de votre jeu ici. Il faut appeler la méthode une nouvelle
         fois si vous recommencer une nouvelle partie.
         """
+        self.game_state = gs.GAME_RUNNING
+
         self.player = Player("assets/2dfish/spritesheets/__cartoon_fish_06_yellow_idle.png")
         self.player.current_animation.center_x = 200
         self.player.current_animation.center_y = 200
