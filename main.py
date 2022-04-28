@@ -10,6 +10,7 @@ import arcade
 from game_time import GameElapsedTime
 from player import Player, Direction
 from enemy_fish import EnemyFish
+from fish_animation import FishAnimation
 import game_constants as gc
 
 
@@ -37,6 +38,10 @@ class MyGame(arcade.Window):
 
         self.enemy_list = None
 
+        self.life_one = None
+        self.life_two = None
+        self.life_three = None
+
         self.game_camera = None
         self.gui_camera = None
 
@@ -59,6 +64,10 @@ class MyGame(arcade.Window):
 
         self.enemy_list = arcade.SpriteList()
 
+        self.life_one = FishAnimation("assets/2dfish/spritesheets/__cartoon_fish_06_yellow_idle.png", scale=0.10)
+        self.life_two = FishAnimation("assets/2dfish/spritesheets/__cartoon_fish_06_yellow_idle.png", scale=0.10)
+        self.life_three = FishAnimation("assets/2dfish/spritesheets/__cartoon_fish_06_yellow_idle.png", scale=0.10)
+
         self.game_camera = arcade.Camera(gc.SCREEN_WIDTH, gc.SCREEN_HEIGHT)
         self.gui_camera = arcade.Camera(gc.SCREEN_WIDTH, gc.SCREEN_HEIGHT)
 
@@ -77,6 +86,20 @@ class MyGame(arcade.Window):
         enemy = EnemyFish(direction, (x, y))
         
         self.enemy_list.append(enemy)
+
+    def draw_lives(self):
+        if self.player.lives >= 1:
+            self.life_one.left = 100
+            self.life_one.top = gc.SCREEN_HEIGHT - 10
+            self.life_one.draw()
+        if self.player.lives >= 2:
+            self.life_two.left = self.life_one.right + 10
+            self.life_two.top = gc.SCREEN_HEIGHT - 10
+            self.life_two.draw()
+        if self.player.lives == 3:
+            self.life_three.left = self.life_two.right + 10
+            self.life_three.top = gc.SCREEN_HEIGHT - 10
+            self.life_three.draw()
 
     def on_draw(self):
         """
@@ -98,6 +121,7 @@ class MyGame(arcade.Window):
         arcade.draw_rectangle_filled(gc.SCREEN_WIDTH // 2, gc.SCREEN_HEIGHT - 25, gc.SCREEN_WIDTH, 50, arcade.color.BLEU_DE_FRANCE)
 
         arcade.draw_text("Lives :", 5, gc.SCREEN_HEIGHT - 35, arcade.color.WHITE_SMOKE, 20, width=100, align="center")
+        self.draw_lives()
 
         arcade.draw_text(
             f"Time played : {self.game_timer.get_time_string()}",
