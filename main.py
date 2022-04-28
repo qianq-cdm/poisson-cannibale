@@ -150,6 +150,7 @@ class MyGame(arcade.Window):
         self.enemy_list.update()
 
         self.collision_detection()
+        self.is_alive()
 
     def collision_detection(self):
         player_hit_list = arcade.check_for_collision_with_list(self.player.current_animation, self.enemy_list)
@@ -164,6 +165,10 @@ class MyGame(arcade.Window):
             else:
                 self.player.scale += enemy_size
                 enemy.remove_from_sprite_lists()
+
+    def is_alive(self):
+        if self.player.lives == 0:
+            self.game_state = gs.GAME_OVER
 
     def update_player_speed(self):
         """
