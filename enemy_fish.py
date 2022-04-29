@@ -43,6 +43,18 @@ FISH_SCALE_WEIGHT = (
     15,  # XL
 )
 
+FISH_SIZE_TO_VALUE = {
+    'XXXXS': 8,
+    'XXXS': 10,
+    'XXS': 15,
+    'XS': 20,
+    'S': 25,
+    'M': 30,
+    'ML': 35,
+    'L': 40,
+    'XL': 60,
+}
+
 
 class EnemyFish(FishAnimation):
     """
@@ -57,6 +69,8 @@ class EnemyFish(FishAnimation):
         fish_color = randint(1, 5)
         fish_scale = choices(FISH_SCALE, weights=FISH_SCALE_WEIGHT, k=1)
         flipped = False if direction == Direction.LEFT else True
+
+        self.value = FISH_SIZE_TO_VALUE[fish_scale[0]]
 
         super().__init__(
             FISH_COLOR_TO_PATH[fish_color], 
