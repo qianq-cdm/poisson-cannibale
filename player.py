@@ -21,6 +21,7 @@ class Player:
     
     def __init__(self, spritesheet_path):
         self.scale = 0.10
+        self.score = 0
 
         self.left_animation = FishAnimation(spritesheet_path, scale=self.scale)
         self.right_animation = FishAnimation(spritesheet_path, flip=True, scale=self.scale)
