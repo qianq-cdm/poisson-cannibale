@@ -167,6 +167,11 @@ class MyGame(arcade.Window):
                 self.player.score += enemy.value
                 enemy.remove_from_sprite_lists()
 
+    def accumulate_score_by_time(self):
+        time = self.game_timer.elapsed_time
+        if int(time) % gc.TIME_FOR_POINTS == 0:
+            self.player.score += gc.POINTS_FOR_TIME
+
     def is_alive(self):
         if self.player.lives == 0:
             self.game_state = gs.GAME_OVER
