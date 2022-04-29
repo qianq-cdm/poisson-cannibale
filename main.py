@@ -164,6 +164,7 @@ class MyGame(arcade.Window):
                 self.player.lives -= 1
             else:
                 self.player.scale += 0.05
+                self.player.score += enemy.value
                 enemy.remove_from_sprite_lists()
 
     def is_alive(self):
