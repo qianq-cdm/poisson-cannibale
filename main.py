@@ -146,6 +146,12 @@ class MyGame(arcade.Window):
         Paramètre:
             - delta_time : le nombre de milliseconde depuis le dernier update.
         """
+        if not self.game_state == gs.GAME_RUNNING:
+            self.player_move_up = False
+            self.player_move_down = False
+            self.player_move_left = False
+            self.player_move_right = False
+
         if self.game_state == gs.GAME_RUNNING:
             # Calculate elapsed time
             self.game_timer.accumulate()
