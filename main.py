@@ -115,27 +115,36 @@ class MyGame(arcade.Window):
         """
         arcade.start_render()
 
-        # Game camera rendering
-        self.game_camera.use()
-        self.back_ground.draw()
+        if self.game_state == gs.GAME_RUNNING:
+            # Game camera rendering
+            self.game_camera.use()
+            self.back_ground.draw()
 
-        self.player.draw()
+            self.player.draw()
 
-        self.enemy_list.draw()
+            self.enemy_list.draw()
 
-        # Gui camera rendering
-        self.gui_camera.use()
-        arcade.draw_rectangle_filled(gc.SCREEN_WIDTH // 2, gc.SCREEN_HEIGHT - 25, gc.SCREEN_WIDTH, 50, arcade.color.BLEU_DE_FRANCE)
+            # Gui camera rendering
+            self.gui_camera.use()
+            arcade.draw_rectangle_filled(gc.SCREEN_WIDTH // 2, gc.SCREEN_HEIGHT - 25, gc.SCREEN_WIDTH, 50, arcade.color.BLEU_DE_FRANCE)
 
-        arcade.draw_text("Lives :", 5, gc.SCREEN_HEIGHT - 35, arcade.color.WHITE_SMOKE, 20, width=100, align="center")
-        self.draw_lives()
+            arcade.draw_text("Lives :", 5, gc.SCREEN_HEIGHT - 35, arcade.color.WHITE_SMOKE, 20, width=100, align="center")
+            self.draw_lives()
 
-        arcade.draw_text(
-            f"Time played : {self.game_timer.get_time_string()}",
-            gc.SCREEN_WIDTH - 350, 
-            gc.SCREEN_HEIGHT - 35, 
-            arcade.color.WHITE_SMOKE, 
-            20, width=400, align="center")
+            arcade.draw_text(
+                f"Time played : {self.game_timer.get_time_string()}",
+                gc.SCREEN_WIDTH - 350,
+                gc.SCREEN_HEIGHT - 35,
+                arcade.color.WHITE_SMOKE,
+                20, width=400, align="center")
+
+        elif self.game_state == gs.GAME_PAUSE:
+            arcade.draw_text(
+                f"Game is paused",
+                gc.SCREEN_WIDTH / 2 - 210,
+                gc.SCREEN_HEIGHT / 2,
+                arcade.color.WHITE_SMOKE,
+                20, width=400, align="center")
 
     def draw_lives(self):
         if self.player.lives >= 1:
