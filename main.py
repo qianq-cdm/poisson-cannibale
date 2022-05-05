@@ -49,6 +49,7 @@ class MyGame(arcade.Window):
         self.gui_camera = None
 
         self.game_timer = GameElapsedTime()
+        self.time_since_last_accumulate = 0
 
         self.colliding_with = None
 
@@ -149,8 +150,11 @@ class MyGame(arcade.Window):
         self.player.update(delta_time)
         self.enemy_list.update()
 
+        self.accumulate_score_by_time(delta_time)
         self.collision_detection()
         self.is_alive()
+
+        print(f"score = {self.player.score}")
 
     def collision_detection(self):
         player_hit_list = arcade.check_for_collision_with_list(self.player.current_animation, self.enemy_list)
@@ -167,10 +171,11 @@ class MyGame(arcade.Window):
                 self.player.score += enemy.value
                 enemy.remove_from_sprite_lists()
 
-    def accumulate_score_by_time(self):
-        time = self.game_timer.elapsed_time
-        if int(time) % gc.TIME_FOR_POINTS == 0:
+    def accumulate_score_by_time(self, delta_time):
+        self.time_since_last_accumulate += delta_time
+        if self.time_since_last_accumulate >= gc.TIME_FOR_POINTS:
             self.player.score += gc.POINTS_FOR_TIME
+            self.time_since_last_accumulate = 0
 
     def is_alive(self):
         if self.player.lives == 0:
