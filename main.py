@@ -146,17 +146,16 @@ class MyGame(arcade.Window):
         Paramètre:
             - delta_time : le nombre de milliseconde depuis le dernier update.
         """
-        # Calculate elapsed time
-        self.game_timer.accumulate()
+        if self.game_state == gs.GAME_RUNNING:
+            # Calculate elapsed time
+            self.game_timer.accumulate()
 
-        self.player.update(delta_time)
-        self.enemy_list.update()
+            self.player.update(delta_time)
+            self.enemy_list.update()
 
-        self.accumulate_score_by_time(delta_time)
-        self.collision_detection()
-        self.is_alive()
-
-        print(f"score = {self.player.score}")
+            self.accumulate_score_by_time(delta_time)
+            self.collision_detection()
+            self.is_alive()
 
     def collision_detection(self):
         player_hit_list = arcade.check_for_collision_with_list(self.player.current_animation, self.enemy_list)
