@@ -86,6 +86,13 @@ class MyGame(arcade.Window):
         # Each two seconds, a new enemy fish will spawn.
         arcade.schedule(self.spawn_enemy_fish, 2)
 
+        arcade.schedule(self.accumulate_score_by_time, gc.TIME_FOR_POINTS)
+
+    def accumulate_score_by_time(self, delta_time):
+        if not self.game_state == gs.GAME_RUNNING:
+            return
+        self.player.score += gc.POINTS_FOR_TIME
+
     def spawn_enemy_fish(self, delta_time):
         """
         Callback method to spawn a new fish.
@@ -159,7 +166,6 @@ class MyGame(arcade.Window):
             self.player.update(delta_time)
             self.enemy_list.update()
 
-            self.accumulate_score_by_time(delta_time)
             self.collision_detection()
             self.is_alive()
 
@@ -177,12 +183,6 @@ class MyGame(arcade.Window):
                 self.player.scale += 0.05
                 self.player.score += enemy.fish_value
                 enemy.remove_from_sprite_lists()
-
-    def accumulate_score_by_time(self, delta_time):
-        self.time_since_last_accumulate += delta_time
-        if self.time_since_last_accumulate >= gc.TIME_FOR_POINTS:
-            self.player.score += gc.POINTS_FOR_TIME
-            self.time_since_last_accumulate = 0
 
     def is_alive(self):
         if self.player.lives == 0:
