@@ -92,6 +92,8 @@ class MyGame(arcade.Window):
         :param delta_time: The elapsed time.
         :return: None
         """
+        if not self.game_state == gs.GAME_RUNNING:
+            return
         direction = Direction.LEFT if random.randint(0, 1) == 1 else Direction.RIGHT
         x = -50 if direction == Direction.RIGHT else gc.SCREEN_WIDTH + 50
         y = random.randrange(50, gc.SCREEN_HEIGHT - 150)
