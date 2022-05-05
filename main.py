@@ -219,7 +219,12 @@ class MyGame(arcade.Window):
         Pour connaître la liste des touches possibles:
         https://api.arcade.academy/en/latest/arcade.key.html
         """
-        if key == arcade.key.A:
+        if key == arcade.key.ESCAPE:
+            if self.game_state == gs.GAME_RUNNING:
+                self.game_state = gs.GAME_PAUSE
+            elif self.game_state == gs.GAME_PAUSE:
+                self.game_state = gs.GAME_RUNNING
+        elif key == arcade.key.A:
             self.player_move_left = True
             self.update_player_speed()
         elif key == arcade.key.D:
