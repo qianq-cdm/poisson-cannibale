@@ -175,7 +175,7 @@ class MyGame(arcade.Window):
                 self.player.lives -= 1
             else:
                 self.player.scale += 0.05
-                self.player.score += enemy.value
+                self.player.score += enemy.fish_value
                 enemy.remove_from_sprite_lists()
 
     def accumulate_score_by_time(self, delta_time):

@@ -70,7 +70,7 @@ class EnemyFish(FishAnimation):
         fish_scale = choices(FISH_SCALE, weights=FISH_SCALE_WEIGHT, k=1)
         flipped = False if direction == Direction.LEFT else True
 
-        self.value = FISH_SIZE_TO_VALUE[fish_scale[0]]
+        self.fish_value = FISH_SIZE_TO_VALUE[fish_scale[0]]
 
         super().__init__(
             FISH_COLOR_TO_PATH[fish_color], 
