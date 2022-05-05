@@ -88,7 +88,7 @@ class MyGame(arcade.Window):
 
         arcade.schedule(self.accumulate_score_by_time, gc.TIME_FOR_POINTS)
 
-    def accumulate_score_by_time(self, delta_time):
+    def accumulate_score_by_time(self):
         if not self.game_state == gs.GAME_RUNNING:
             return
         self.player.score += gc.POINTS_FOR_TIME
@@ -107,14 +107,6 @@ class MyGame(arcade.Window):
         enemy = EnemyFish(direction, (x, y))
         
         self.enemy_list.append(enemy)
-
-    def draw_lives(self):
-        if self.player.lives >= 1:
-            self.life_one.draw()
-        if self.player.lives >= 2:
-            self.life_two.draw()
-        if self.player.lives == 3:
-            self.life_three.draw()
 
     def on_draw(self):
         """
@@ -144,6 +136,14 @@ class MyGame(arcade.Window):
             gc.SCREEN_HEIGHT - 35, 
             arcade.color.WHITE_SMOKE, 
             20, width=400, align="center")
+
+    def draw_lives(self):
+        if self.player.lives >= 1:
+            self.life_one.draw()
+        if self.player.lives >= 2:
+            self.life_two.draw()
+        if self.player.lives == 3:
+            self.life_three.draw()
 
     def on_update(self, delta_time):
         """
