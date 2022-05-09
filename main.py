@@ -13,6 +13,7 @@ from enemy_fish import EnemyFish
 from fish_animation import FishAnimation
 import game_constants as gc
 from game_state import GameState as gs
+from file_io import FileIO
 
 
 class MyGame(arcade.Window):
@@ -53,11 +54,16 @@ class MyGame(arcade.Window):
 
         self.colliding_with = None
 
+        self.score_file_io = FileIO("score")
+        self.score_list = None
+
     def setup(self):
         """
         Configurer les variables de votre jeu ici. Il faut appeler la méthode une nouvelle
         fois si vous recommencer une nouvelle partie.
         """
+        self.score_list = self.score_file_io.read_tuple_list()
+
         self.game_state = gs.GAME_RUNNING
 
         self.player = Player("assets/2dfish/spritesheets/__cartoon_fish_06_yellow_idle.png")
@@ -88,7 +94,7 @@ class MyGame(arcade.Window):
 
         arcade.schedule(self.accumulate_score_by_time, gc.TIME_FOR_POINTS)
 
-    def accumulate_score_by_time(self):
+    def accumulate_score_by_time(self, delta_time):
         if not self.game_state == gs.GAME_RUNNING:
             return
         self.player.score += gc.POINTS_FOR_TIME
@@ -193,9 +199,25 @@ class MyGame(arcade.Window):
                 self.player.score += enemy.fish_value
                 enemy.remove_from_sprite_lists()
 
+    def write_score_to_file(self):
+        self.score_file_io.write_tuple_list(self.score_list)
+
+    def update_score_list(self, username="Player", score=0):
+        score_tuple = (username, score)
+        self.score_list.append(score_tuple)
+        smallest_score_element = score_tuple
+        for score in self.score_list:
+            if score[1] <= smallest_score_element[1]:
+                smallest_score_element = score
+        if len(self.score_list) > 3:
+            self.score_list.remove(smallest_score_element)
+        self.write_score_to_file()
+
     def is_alive(self):
         if self.player.lives == 0:
             self.game_state = gs.GAME_OVER
+            self.update_score_list(score=self.player.score)
+            print(self.player.score)
 
     def update_player_speed(self):
         """
