@@ -50,7 +50,6 @@ class MyGame(arcade.Window):
         self.gui_camera = None
 
         self.game_timer = GameElapsedTime()
-        self.time_since_last_accumulate = 0
 
         self.colliding_with = None
 
