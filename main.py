@@ -54,7 +54,7 @@ class MyGame(arcade.Window):
 
         self.colliding_with = None
 
-        self.score_file_io = FileIO("score")
+        self.score_file_io = None
         self.score_list = None
 
     def setup(self):
@@ -62,6 +62,7 @@ class MyGame(arcade.Window):
         Configurer les variables de votre jeu ici. Il faut appeler la méthode une nouvelle
         fois si vous recommencer une nouvelle partie.
         """
+        self.score_file_io = FileIO("score")
         self.score_list = self.score_file_io.read_tuple_list()
 
         self.game_state = gs.GAME_RUNNING
@@ -196,7 +197,7 @@ class MyGame(arcade.Window):
                 self.player.lives -= 1
             else:
                 self.player.scale += 0.05
-                self.player.score += enemy.fish_value
+                self.player.score += (enemy.fish_value / 2)
                 enemy.remove_from_sprite_lists()
 
     def write_score_to_file(self):
