@@ -16,7 +16,7 @@ from game_state import GameState as gs
 from file_io import FileIO
 
 
-class MyGame(arcade.Window):
+class MyGame(arcade.View):
     """
     La classe principale de l'application
 
@@ -24,10 +24,8 @@ class MyGame(arcade.Window):
     Si vous en avez besoin, remplacer le mot clé "pass" par votre propre code.
     """
 
-    def __init__(self, width, height, title):
-        super().__init__(width, height, title)
-
-        arcade.set_background_color(arcade.color.BLUE_YONDER)
+    def __init__(self):
+        super().__init__()
 
         self.back_ground = None
 
@@ -55,6 +53,10 @@ class MyGame(arcade.Window):
 
         self.score_file_io = None
         self.score_list = None
+
+    def on_show_view(self):
+        arcade.set_background_color(arcade.color.BLUE_YONDER)
+        self.setup()
 
     def setup(self):
         """
@@ -119,8 +121,6 @@ class MyGame(arcade.Window):
         C'est la méthode que Arcade invoque à chaque "frame" pour afficher les éléments
         de votre jeu à l'écran.
         """
-        arcade.start_render()
-
         if self.game_state == gs.GAME_RUNNING:
             # Game camera rendering
             self.game_camera.use()
@@ -296,8 +296,9 @@ class MyGame(arcade.Window):
 
 def main():
     """ Main method """
-    game = MyGame(gc.SCREEN_WIDTH, gc.SCREEN_HEIGHT, gc.SCREEN_TITLE)
-    game.setup()
+    window = arcade.Window(gc.SCREEN_WIDTH, gc.SCREEN_HEIGHT, gc.SCREEN_TITLE)
+    game = MyGame()
+    window.show_view(game)
     arcade.run()
 
 
