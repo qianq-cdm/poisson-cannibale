@@ -15,6 +15,8 @@ import game_constants as gc
 from game_state import GameState as gs
 from file_io import FileIO
 
+from game_over_view import GameOverView
+
 
 class MyGame(arcade.View):
     """
@@ -121,6 +123,8 @@ class MyGame(arcade.View):
         C'est la méthode que Arcade invoque à chaque "frame" pour afficher les éléments
         de votre jeu à l'écran.
         """
+        self.clear()
+
         if self.game_state == gs.GAME_RUNNING:
             # Game camera rendering
             self.game_camera.use()
@@ -218,11 +222,15 @@ class MyGame(arcade.View):
         if self.player.lives == 0:
             self.game_state = gs.GAME_OVER
             self.update_score_list(score=self.player.score)
+            game_over_view = GameOverView(self, False)
+            self.window.show_view(game_over_view)
 
     def did_win(self):
         if self.player.scale >= 1:
             self.game_state = gs.GAME_OVER
             self.update_score_list(score=self.player.score)
+            game_over_view = GameOverView(self, True)
+            self.window.show_view(game_over_view)
 
     def update_player_speed(self):
         """
