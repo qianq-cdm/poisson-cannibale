@@ -183,6 +183,7 @@ class MyGame(arcade.Window):
 
             self.collision_detection()
             self.is_alive()
+            self.did_win()
 
     def collision_detection(self):
         player_hit_list = arcade.check_for_collision_with_list(self.player.current_animation, self.enemy_list)
@@ -195,8 +196,8 @@ class MyGame(arcade.Window):
                 self.colliding_with = enemy
                 self.player.lives -= 1
             else:
-                self.player.scale += 0.05
-                self.player.score += (enemy.fish_value / 2)
+                self.player.scale += (enemy.scale / 5)
+                self.player.score += enemy.fish_value
                 enemy.remove_from_sprite_lists()
 
     def write_score_to_file(self):
@@ -217,7 +218,11 @@ class MyGame(arcade.Window):
         if self.player.lives == 0:
             self.game_state = gs.GAME_OVER
             self.update_score_list(score=self.player.score)
-            print(self.player.score)
+
+    def did_win(self):
+        if self.player.scale >= 1:
+            self.game_state = gs.GAME_OVER
+            self.update_score_list(score=self.player.score)
 
     def update_player_speed(self):
         """
