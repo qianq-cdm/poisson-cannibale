@@ -192,6 +192,8 @@ class MyGame(arcade.View):
 
     def collision_detection(self):
         player_hit_list = arcade.check_for_collision_with_list(self.player.current_animation, self.enemy_list)
+        if self.colliding_with and not player_hit_list.count(self.colliding_with):
+            self.colliding_with = None
         for enemy in player_hit_list:
             player_size = self.player.scale
             enemy_size = enemy.scale
