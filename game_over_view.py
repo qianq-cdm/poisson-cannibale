@@ -1,6 +1,7 @@
 import arcade
 import game_constants as gc
 
+
 class GameOverView(arcade.View):
     def __init__(self, game_view, did_win: bool, time_taken: str, score: int):
         super().__init__()

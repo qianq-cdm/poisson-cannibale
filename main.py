@@ -16,6 +16,7 @@ from game_state import GameState as gs
 from file_io import FileIO
 
 from game_over_view import GameOverView
+from menu_view import MenuView
 
 
 class MyGame(arcade.View):
@@ -305,8 +306,8 @@ class MyGame(arcade.View):
 def main():
     """ Main method """
     window = arcade.Window(gc.SCREEN_WIDTH, gc.SCREEN_HEIGHT, gc.SCREEN_TITLE)
-    game = MyGame()
-    window.show_view(game)
+    menu_view = MenuView(MyGame())
+    window.show_view(menu_view)
     arcade.run()
 
 

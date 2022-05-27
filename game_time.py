@@ -7,7 +7,7 @@ class GameElapsedTime:
     """
     def __init__(self):
         self.start_time = time.time()
-        self.elapsed_time = None
+        self.elapsed_time = 0
 
     def accumulate(self):
         """
