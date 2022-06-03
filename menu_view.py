@@ -1,16 +1,18 @@
 import arcade
 import arcade.gui
+
 import game_constants as gc
+
+from game_view import GameView
 
 
 class StartButton(arcade.gui.UIFlatButton):
-    def __init__(self, game_view: arcade.View, window, text, width):
+    def __init__(self, window, text, width):
         super().__init__(text=text, width=width)
-        self.game_view = game_view
         self.window = window
 
     def on_click(self, event: arcade.gui.UIOnClickEvent):
-        self.window.show_view(self.game_view)
+        self.window.show_view(GameView())
 
 
 class QuitButton(arcade.gui.UIFlatButton):
@@ -19,13 +21,13 @@ class QuitButton(arcade.gui.UIFlatButton):
 
 
 class MenuView(arcade.View):
-    def __init__(self, game_view: arcade.View):
+    def __init__(self):
         super().__init__()
         self.manager = arcade.gui.UIManager()
         self.manager.enable()
         self.v_box = arcade.gui.UIBoxLayout()
 
-        start_button = StartButton(game_view=game_view, window=self.window, text="Start Game", width=200)
+        start_button = StartButton(window=self.window, text="Start Game", width=200)
         self.v_box.add(start_button.with_space_around(bottom=20))
 
         settings_button = arcade.gui.UIFlatButton(text="Settings", width=200)
