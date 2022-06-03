@@ -21,7 +21,7 @@ class QuitButton(arcade.gui.UIFlatButton):
 
 
 class GameOverView(arcade.View):
-    def __init__(self, game_view, did_win: bool, time_taken: str, score: int):
+    def __init__(self, did_win: bool, time_taken: str, score: int):
         super().__init__()
         self.game_view = game_view
         self.did_win = did_win
