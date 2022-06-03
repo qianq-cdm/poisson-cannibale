@@ -12,6 +12,7 @@ from game_state import GameState as gs
 from file_io import FileIO
 
 from game_over_view import GameOverView
+from pause_view import PauseView
 
 
 class GameView(arcade.View):
@@ -265,9 +266,7 @@ class GameView(arcade.View):
         """
         if key == arcade.key.ESCAPE:
             if self.game_state == gs.GAME_RUNNING:
-                self.game_state = gs.GAME_PAUSE
-            elif self.game_state == gs.GAME_PAUSE:
-                self.game_state = gs.GAME_RUNNING
+                self.window.show_view(PauseView(current_game_view=self))
         elif key == arcade.key.A:
             self.player_move_left = True
             self.update_player_speed()
