@@ -53,9 +53,10 @@ class GameView(arcade.View):
         self.score_file_io = None
         self.score_list = None
 
+        self.setup()
+
     def on_show_view(self):
         arcade.set_background_color(arcade.color.BLUE_YONDER)
-        self.setup()
 
     def setup(self):
         """
