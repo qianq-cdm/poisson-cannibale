@@ -3,7 +3,7 @@ import arcade.gui
 
 import game_constants as gc
 
-from game_view import GameView
+import game_view
 
 
 class StartButton(arcade.gui.UIFlatButton):
@@ -12,7 +12,7 @@ class StartButton(arcade.gui.UIFlatButton):
         self.window = window
 
     def on_click(self, event: arcade.gui.UIOnClickEvent):
-        self.window.show_view(GameView())
+        self.window.show_view(game_view.GameView())
 
 
 class QuitButton(arcade.gui.UIFlatButton):
