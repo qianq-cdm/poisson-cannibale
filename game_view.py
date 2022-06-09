@@ -227,14 +227,14 @@ class GameView(arcade.View):
         if self.player.lives == 0:
             self.game_state = gs.GAME_OVER
             self.update_score_list(score=self.player.score)
-            game_over_view = GameOverView(False, self.game_timer.get_time_string(), self.player.score)
+            game_over_view = GameOverView(False, self.game_timer.get_time_string(), self.player.score, self.username)
             self.window.show_view(game_over_view)
 
     def did_win(self):
         if self.player.scale >= 1:
             self.game_state = gs.GAME_OVER
             self.update_score_list(score=self.player.score)
-            game_over_view = GameOverView(True, self.game_timer.get_time_string(), self.player.score)
+            game_over_view = GameOverView(True, self.game_timer.get_time_string(), self.player.score, self.username)
             self.window.show_view(game_over_view)
 
     def update_player_speed(self):

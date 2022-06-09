@@ -7,12 +7,13 @@ import game_view
 
 
 class RestartButton(arcade.gui.UIFlatButton):
-    def __init__(self, window, text, width):
+    def __init__(self, window, text, width, username):
         super().__init__(text=text, width=width)
         self.window = window
+        self.username = username
 
     def on_click(self, event: arcade.gui.UIOnClickEvent):
-        self.window.show_view(game_view.GameView())
+        self.window.show_view(game_view.GameView(username=self.username))
 
 
 class QuitButton(arcade.gui.UIFlatButton):
@@ -21,7 +22,7 @@ class QuitButton(arcade.gui.UIFlatButton):
 
 
 class GameOverView(arcade.View):
-    def __init__(self, did_win: bool, time_taken: str, score: int):
+    def __init__(self, did_win: bool, time_taken: str, score: int, username: str):
         super().__init__()
         self.game_view = game_view
         self.did_win = did_win
@@ -32,7 +33,7 @@ class GameOverView(arcade.View):
         self.manager.enable()
         self.v_box = arcade.gui.UIBoxLayout()
 
-        replay_button = RestartButton(window=self.window, text="Replay", width=200)
+        replay_button = RestartButton(window=self.window, text="Replay", width=200, username=username)
         self.v_box.add(replay_button.with_space_around(bottom=20))
 
         quit_button = QuitButton(text="Quit", width=200)
