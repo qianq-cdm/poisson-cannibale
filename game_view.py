@@ -23,7 +23,7 @@ class GameView(arcade.View):
     Si vous en avez besoin, remplacer le mot clé "pass" par votre propre code.
     """
 
-    def __init__(self):
+    def __init__(self, username):
         super().__init__()
 
         self.back_ground = None
@@ -52,6 +52,9 @@ class GameView(arcade.View):
 
         self.score_file_io = None
         self.score_list = None
+
+        self.username = username
+        print(f"Username: \"{self.username}\"")
 
         self.setup()
 
@@ -209,8 +212,8 @@ class GameView(arcade.View):
     def write_score_to_file(self):
         self.score_file_io.write_tuple_list(self.score_list)
 
-    def update_score_list(self, username="Player", score=0):
-        score_tuple = (username, score)
+    def update_score_list(self, score=0):
+        score_tuple = (self.username, score)
         self.score_list.append(score_tuple)
         smallest_score_element = score_tuple
         for score in self.score_list:
